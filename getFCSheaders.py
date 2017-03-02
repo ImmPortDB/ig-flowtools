@@ -4,7 +4,6 @@
 #                          All rights reserved.
 ######################################################################
 from __future__ import print_function
-import sys
 import os
 
 from argparse import ArgumentParser
@@ -12,7 +11,7 @@ from argparse import ArgumentParser
 
 def get_fcs_marker_list(marker_file):
     with open(marker_file, "r") as mrkrs:
-        useless_first_line = mrkrs.readline()
+        mrkrs.readline()
         channels = []
         markers = []
         for lines in mrkrs:
@@ -26,12 +25,12 @@ def get_fcs_marker_list(marker_file):
     return(fcs_markers)
 
 
-def print_fcs_headers(files, filenames, outfile, tool_dir):
+def print_fcs_headers(files, filenames, outfile):
     headers = {}
-    tool = "/".join([tool_dir, "getFCSheader.R"])
+    tool = "getFCSheader.R"
     for eachfile in files:
         tmp_output = "tmp_fcs_headers.txt"
-        run_command = " ". join(["Rscript --slave --vanilla", tool, "--args", eachfile, tmp_output])
+        run_command = " ". join([tool, "--args", eachfile, tmp_output])
         os.system(run_command)
         headers[eachfile] = get_fcs_marker_list(tmp_output)
 
@@ -63,12 +62,6 @@ if __name__ == "__main__":
             help="File names.")
 
     parser.add_argument(
-            '-t',
-            dest="tool_dir",
-            required=True,
-            help="Path to the tool directory")
-
-    parser.add_argument(
             '-o',
             dest="output_file",
             required=True,
@@ -77,4 +70,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     input_files = [f for f in args.input_files]
     file_names = [fn for fn in args.file_names]
-    print_fcs_headers(input_files, file_names, args.output_file, args.tool_dir)
+    print_fcs_headers(input_files, file_names, args.output_file)

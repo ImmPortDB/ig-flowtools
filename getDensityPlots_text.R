@@ -1,3 +1,4 @@
+#!/usr/bin/Rscript --vanilla --slave
 # Density Plot Module for Galaxy
 # ggplot2
 ######################################################################

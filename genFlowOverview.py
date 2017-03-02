@@ -4,7 +4,6 @@
 #                          All rights reserved.
 ######################################################################
 from __future__ import print_function
-import sys
 import os
 import pandas as pd
 import logging
@@ -31,8 +30,7 @@ profile_key = {
 
 # flow CL functions
 def run_flowCL(phenotype, output_txt, output_pdf, tool):
-    run_command = " ". join(["Rscript --slave --vanilla", tool, "--args",
-                             output_txt, phenotype])
+    run_command = " ". join([tool, "--args", output_txt, phenotype])
     os.system(run_command)
 
     get_graph = " ".join(["mv flowCL_results/*.pdf", output_pdf])
@@ -53,8 +51,8 @@ def generate_flowCL_query(list_markers, list_types):
     return("".join(query))
 
 
-def translate_profiles(input_file, tool_dir, html_dir):
-    tool = "/".join([tool_dir, "getOntology.R"])
+def translate_profiles(input_file, html_dir):
+    tool = "getOntology.R"
     html_table = "".join([html_dir, "/CLprofiles.txt"])
     score_table = "".join(["cp ", input_file, " ", html_dir, "/scores.txt"])
     os.system(score_table)
@@ -205,10 +203,10 @@ def gen_flow_overview(args):
     html_template = "genOverview.template"
 
     if args.scores:
-        translate_profiles(args.scores, args.tool_directory, args.output_directory)
+        translate_profiles(args.scores, args.output_directory)
         html_template = "genOverviewCL.template"
 
-    env = Environment(loader=FileSystemLoader(args.tool_directory + "/templates"))
+    env = Environment(loader=FileSystemLoader(args.tool_directory))
     template = env.get_template(html_template)
 
     real_directory = args.output_directory.replace("/job_working_directory", "")
@@ -322,7 +320,7 @@ if __name__ == "__main__":
             '-t',
             dest="tool_directory",
             required=True,
-            help="Location of the Tool Directory.")
+            help="Location of the /share/templates Directory.")
 
     args = parser.parse_args()
 

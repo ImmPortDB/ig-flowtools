@@ -1,3 +1,4 @@
+#!/usr/bin/Rscript --vanilla --slave
 # FCS Headers Module for Galaxy
 # FlowCore
 ######################################################################

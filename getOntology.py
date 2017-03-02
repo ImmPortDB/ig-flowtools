@@ -25,13 +25,13 @@ def generate_flowCL_query(list_markers, list_types):
     return("".join(query))
 
 
-def run_flowCL(phenotype, output_file, output_dir, tool_dir):
+def run_flowCL(phenotype, output_file, output_dir, template_dir):
     os.mkdir(output_dir)
-    tool = "/".join([tool_dir, "getOntology.R"])
+    tool = "getOntology.R"
     output_txt = "".join([output_dir, "/flowCL_run_summary.txt"])
     output_table = "".join([output_dir, "/flowCL_table.txt"])
     output_pdf = "".join([output_dir, "/flowCL_res.pdf"])
-    run_command = " ". join(["Rscript --slave --vanilla", tool, "--args", output_txt, phenotype])
+    run_command = " ". join([tool, "--args", output_txt, phenotype])
     os.system(run_command)
 
     table = defaultdict(list)
@@ -79,7 +79,7 @@ def run_flowCL(phenotype, output_file, output_dir, tool_dir):
     get_graph = " ".join(["mv flowCL_results/*.pdf", output_pdf])
     os.system(get_graph)
 
-    env = Environment(loader=FileSystemLoader(tool_dir + "/templates"))
+    env = Environment(loader=FileSystemLoader(template_dir))
     template = env.get_template("flowCL.template")
 
     real_directory = output_dir.replace("/job_working_directory", "")
@@ -125,7 +125,7 @@ if __name__ == "__main__":
             '-t',
             dest="tool_dir",
             required=True,
-            help="Path to the tool directory")
+            help="Path to the /share/templates directory")
 
     args = parser.parse_args()
 

@@ -6,7 +6,6 @@
 # version 2
 from __future__ import print_function
 
-import sys
 import os
 from argparse import ArgumentParser
 import pandas as pd
@@ -14,8 +13,11 @@ from scipy.stats import gmean
 
 
 def run_FLOCK(input_file, method, bins, density, output_file, mfi_file,
-              mfi_calc, profile, tool_directory):
-    run_command = tool_directory + "/bin/" + method + " " + input_file
+              mfi_calc, profile):
+    # This version of the tool assumes FLOCK is installed.
+    # install FLOCK with:
+    # conda install flock
+    run_command = method + " " + input_file
     if bins:
         run_command += " " + bins
     if density:
@@ -100,12 +102,6 @@ if __name__ == "__main__":
             help="File location for the output file.")
 
     parser.add_argument(
-            '-t',
-            dest="tool_directory",
-            required=True,
-            help="File location for the output file.")
-
-    parser.add_argument(
             '-c',
             dest="centroids",
             required=True,
@@ -120,4 +116,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     run_FLOCK(args.input_file, args.method, args.bins,
               args.density, args.output_file, args.centroids, args.mfi_calc,
-              args.profile, args.tool_directory)
+              args.profile)

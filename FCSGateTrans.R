@@ -1,3 +1,4 @@
+#!/usr/bin/Rscript --vanilla --slave
 ######################################################################
 #                  Copyright (c) 2016 Northrop Grumman.
 #                          All rights reserved.

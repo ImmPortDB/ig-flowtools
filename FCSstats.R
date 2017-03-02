@@ -1,10 +1,11 @@
+#!/usr/bin/Rscript --vanilla --slave
 # FCS Summary Statistic Module for Galaxy
 # FlowCore
 ######################################################################
 #                  Copyright (c) 2016 Northrop Grumman.
 #                          All rights reserved.
 ######################################################################
-# 
+#
 # Version 1
 # Cristel Thomas
 #

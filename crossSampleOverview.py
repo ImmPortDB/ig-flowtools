@@ -6,7 +6,6 @@
 ######################################################################
 
 from __future__ import print_function
-import sys
 import os
 import logging
 import fileinput
@@ -60,7 +59,7 @@ def get_boxplot_stats(all_data, mfi_file, output_json):
         for marker in df.columns:
             if marker != 'Population':
                 tmp_outliers = list(out[population][marker])
-                if (len(list(out[population][marker]))> 100):
+                if (len(list(out[population][marker])) > 100):
                     tmp_outliers = list(out[population][marker].sample(n=100))
                     resampled = True
                 outliers[population][marker] = tmp_outliers
@@ -83,10 +82,10 @@ def get_boxplot_stats(all_data, mfi_file, output_json):
 
     return resampled
 
-def cs_overview(input_file, input_mfi, init_mfi, output_file, output_dir, tools_dir, cs_files):
+def cs_overview(input_file, input_mfi, init_mfi, output_file, output_dir, template_dir, cs_files):
     os.mkdir(output_dir)
 
-    env = Environment(loader=FileSystemLoader(tools_dir + "/templates"))
+    env = Environment(loader=FileSystemLoader(template_dir))
     template = env.get_template("csOverview.template")
 
     real_directory = output_dir.replace("/job_working_directory", "")
@@ -171,7 +170,7 @@ if __name__ == "__main__":
             '-t',
             dest="tool_directory",
             required=True,
-            help="Location of the Tool Directory.")
+            help="Location of the /share/templates Directory.")
 
     args = parser.parse_args()
 
