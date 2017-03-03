@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript --vanilla --slave
+#!/usr/bin/env Rscript --vanilla --slave
 # FCS Summary Statistic Module for Galaxy
 # FlowCore
 ######################################################################

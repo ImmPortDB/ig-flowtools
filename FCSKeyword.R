@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript --vanilla --slave
+#!/usr/bin/env Rscript --vanilla --slave
 # ImmPort FCSKeywords
 ######################################################################
 #                  Copyright (c) 2016 Northrop Grumman.

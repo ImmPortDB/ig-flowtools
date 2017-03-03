@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript --vanilla --slave
+#!/usr/bin/env Rscript --vanilla --slave
 # Cell Ontology Module for Galaxy
 # FlowCL
 ######################################################################
