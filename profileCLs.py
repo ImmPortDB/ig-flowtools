@@ -6,6 +6,7 @@
 ######################################################################
 from __future__ import print_function
 import os
+import subprocess
 from argparse import ArgumentParser
 from jinja2 import Environment, FileSystemLoader
 
@@ -18,10 +19,8 @@ profile_key = {
 
 
 def run_flowCL(phenotype, output_txt, output_pdf, tool):
-    run_command = " ". join([tool, "--args", output_txt, phenotype])
-    os.system(run_command)
-    get_graph = " ".join(["mv flowCL_results/*.pdf", output_pdf])
-    os.system(get_graph)
+    subprocess.call([tool, '--args', output_txt, phenotype])
+    subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf])
     return
 
 
@@ -43,8 +42,8 @@ def translate_profiles(input_file, template_dir, output, html_dir):
 
     tool = "getOntology.R"
     html_table = "".join([html_dir, "/CLprofiles.txt"])
-    score_table = "".join(["cp ", input_file, " ", html_dir, "/scores.txt"])
-    os.system(score_table)
+    score_table = "".join([html_dir, "/scores.txt"])
+    subprocess.call(['cp', input_file, score_table])
 
     # read profile
     with open(input_file, "r") as flock_profiles, open(html_table, "w") as out:

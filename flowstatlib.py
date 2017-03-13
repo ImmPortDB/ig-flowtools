@@ -3,7 +3,6 @@
 #                          All rights reserved.
 ######################################################################
 from __future__ import print_function
-import sys
 import pandas as pd
 from scipy.stats import gmean
 from argparse import ArgumentParser

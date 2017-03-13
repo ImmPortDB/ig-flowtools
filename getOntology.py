@@ -5,6 +5,7 @@
 ######################################################################
 from __future__ import print_function
 import sys
+import subprocess
 import os
 
 from collections import defaultdict
@@ -31,8 +32,7 @@ def run_flowCL(phenotype, output_file, output_dir, template_dir):
     output_txt = "".join([output_dir, "/flowCL_run_summary.txt"])
     output_table = "".join([output_dir, "/flowCL_table.txt"])
     output_pdf = "".join([output_dir, "/flowCL_res.pdf"])
-    run_command = " ". join([tool, "--args", output_txt, phenotype])
-    os.system(run_command)
+    subprocess.call([tool, '--args', output_txt, phenotype])
 
     table = defaultdict(list)
     labels = []
@@ -76,8 +76,7 @@ def run_flowCL(phenotype, output_file, output_dir, template_dir):
                 newline = " ".join(cls)
             tbl.write("\t".join([labels[j], newline]) + "\n")
 
-    get_graph = " ".join(["mv flowCL_results/*.pdf", output_pdf])
-    os.system(get_graph)
+    subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf])
 
     env = Environment(loader=FileSystemLoader(template_dir))
     template = env.get_template("flowCL.template")

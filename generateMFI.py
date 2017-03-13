@@ -4,7 +4,6 @@
 #                          All rights reserved.
 ######################################################################
 from __future__ import print_function
-import sys
 from argparse import ArgumentParser
 import pandas as pd
 from scipy.stats import gmean

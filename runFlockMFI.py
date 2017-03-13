@@ -6,7 +6,7 @@
 # version 2
 from __future__ import print_function
 
-import os
+import subprocess
 from argparse import ArgumentParser
 import pandas as pd
 from scipy.stats import gmean
@@ -17,16 +17,14 @@ def run_FLOCK(input_file, method, bins, density, output_file, mfi_file,
     # This version of the tool assumes FLOCK is installed.
     # install FLOCK with:
     # conda install flock
-    run_command = method + " " + input_file
+    run_command = [method. input_file]
     if bins:
-        run_command += " " + bins
+        run_command.append(bins)
     if density:
-        run_command += " " + density
+        run_command.append(density)
 
-    os.system(run_command)
-
-    move_command = "mv flock_results.txt " + output_file
-    os.system(move_command)
+    subprocess.call(run_command)
+    subprocess.call(['mv', 'flock_results.txt', output_file])
 
     # Here add some way to calculate the count and tack it on to profile file.
     flockdf = pd.read_table(output_file)
@@ -55,8 +53,6 @@ def run_FLOCK(input_file, method, bins, density, output_file, mfi_file,
     profile_pop = flock_profile.merge(fstats['population_all'], on='Population_ID')
     profile_pop.to_csv(profile, sep="\t", float_format='%.2f', index=False)
 
-#    get_profile = "mv profile.txt " + profile
-#    os.system(get_profile)
     return
 
 

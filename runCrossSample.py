@@ -6,6 +6,7 @@
 from __future__ import print_function
 import sys
 import os
+import subprocess
 from scipy.stats import gmean
 from argparse import ArgumentParser
 from collections import defaultdict
@@ -112,9 +113,7 @@ def run_cross_sample(input_files, f_names, mfi_file, output_dir, summary_stat,
     outputs = {}
     # Run cent_adjust
     for nm, flow_file in enumerate(input_files):
-        run_command = "cent_adjust mfi.txt " + flow_file
-        print(run_command)
-        os.system(run_command)
+        subprocess.call(['cent_adjust', 'mfi.txt', flow_file])
         flow_name = os.path.split(flow_file)[1]
         outfile = os.path.join(output_dir, flow_name + ".flowclr")
         outputs[outfile] = f_names[nm]
