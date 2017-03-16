@@ -7,6 +7,7 @@
 from __future__ import print_function
 import os
 import subprocess
+import sys
 from argparse import ArgumentParser
 from jinja2 import Environment, FileSystemLoader
 
@@ -19,8 +20,12 @@ profile_key = {
 
 
 def run_flowCL(phenotype, output_txt, output_pdf, tool):
-    subprocess.call([tool, '--args', output_txt, phenotype])
-    subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf])
+    try:
+        subprocess.call([tool, '--args', output_txt, phenotype], env=os.environ.copy(), shell=True)
+        subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf], env=os.environ.copy(), shell=True)
+    except:
+        sys.stderr.write("Could not call flowCL\n")
+        sys.exit(3)
     return
 
 
@@ -43,8 +48,11 @@ def translate_profiles(input_file, template_dir, output, html_dir):
     tool = "getOntology.R"
     html_table = "".join([html_dir, "/CLprofiles.txt"])
     score_table = "".join([html_dir, "/scores.txt"])
-    subprocess.call(['cp', input_file, score_table])
-
+    try:
+        subprocess.call(['cp', input_file, score_table], env=os.environ.copy(), shell=True)
+    except:
+        sys.stderr.write("Couldn't copy flowCL output\n")
+        sys.exit(3)
     # read profile
     with open(input_file, "r") as flock_profiles, open(html_table, "w") as out:
         headers = flock_profiles.readline()

@@ -32,8 +32,11 @@ def run_flowCL(phenotype, output_file, output_dir, template_dir):
     output_txt = "".join([output_dir, "/flowCL_run_summary.txt"])
     output_table = "".join([output_dir, "/flowCL_table.txt"])
     output_pdf = "".join([output_dir, "/flowCL_res.pdf"])
-    subprocess.call([tool, '--args', output_txt, phenotype])
-
+    try:
+        subprocess.call([tool, '--args', output_txt, phenotype], env=os.environ.copy(), shell=True)
+    except:
+        sys.stderr.write("could not call getOntology.R\n")
+        sys.exit(3)
     table = defaultdict(list)
     labels = []
     nb_match = 0
@@ -75,9 +78,11 @@ def run_flowCL(phenotype, output_file, output_dir, template_dir):
                         cls[m] = "".join([link, cls[m], "</a>"])
                 newline = " ".join(cls)
             tbl.write("\t".join([labels[j], newline]) + "\n")
-
-    subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf])
-
+    try:
+        subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf], env=os.environ.copy(), shell=True)
+    except:
+        sys.stderr.write("could not move flowCL results\n")
+        sys.exit(3)
     env = Environment(loader=FileSystemLoader(template_dir))
     template = env.get_template("flowCL.template")
 

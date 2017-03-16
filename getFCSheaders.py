@@ -5,6 +5,8 @@
 ######################################################################
 from __future__ import print_function
 import subprocess
+import os
+import sys
 
 from argparse import ArgumentParser
 
@@ -30,7 +32,11 @@ def print_fcs_headers(files, filenames, outfile):
     tool = "getFCSheader.R"
     for eachfile in files:
         tmp_output = "tmp_fcs_headers.txt"
-        subprocess.call([tool, '--args', eachfile, tmp_output])
+        try:
+            subprocess.call([tool, '--args', eachfile, tmp_output], env=os.environ.copy(), shell=True)
+        except:
+            sys.stderr.write("Could not run getFCSheader.R\n")
+            sys.exit(2)
         headers[eachfile] = get_fcs_marker_list(tmp_output)
 
     with open(outfile, "w") as outf:

@@ -6,6 +6,7 @@
 from __future__ import print_function
 import os
 import subprocess
+import sys
 import pandas as pd
 import logging
 import fileinput
@@ -31,8 +32,12 @@ profile_key = {
 
 # flow CL functions
 def run_flowCL(phenotype, output_txt, output_pdf, tool):
-    subprocess.call([tool, '--args', output_txt, phenotype])
-    subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf])
+    try:
+        subprocess.call([tool, '--args', output_txt, phenotype], env=os.environ.copy(), shell=True)
+        subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf], env=os.environ.copy(), shell=True)
+    except:
+        sys.stderr.write("could not run getOntology.R\n")
+        sys.exit(3)
     return
 
 
@@ -53,8 +58,11 @@ def translate_profiles(input_file, html_dir):
     tool = "getOntology.R"
     html_table = "".join([html_dir, "/CLprofiles.txt"])
     score_table = "".join([html_dir, "/scores.txt"])
-    subprocess.call(['cp', input_file, score_table])
-
+    try:
+        subprocess.call(['cp', input_file, score_table], env=os.environ.copy(), shell=True)
+    except:
+        sys.stderr.write("could not move flowCL output\n".)
+        sys.exit(3)
     # read profile
     with open(input_file, "r") as flock_profiles, open(html_table, "w") as out:
         headers = flock_profiles.readline()
@@ -171,7 +179,7 @@ def get_boxplot_stats(all_data, mfi_file, output_json):
         for marker in df.columns:
             if marker != 'Population':
                 tmp_outliers = list(out[population][marker])
-                if (len(list(out[population][marker]))> 100):
+                if (len(list(out[population][marker])) > 100):
                     tmp_outliers = list(out[population][marker].sample(n=100))
                     resampled = True
                 outliers[population][marker] = tmp_outliers
@@ -193,6 +201,7 @@ def get_boxplot_stats(all_data, mfi_file, output_json):
         js_all.write(panel_to_json_string(wp))
 
     return resampled
+
 
 # html generation
 def gen_flow_overview(args):

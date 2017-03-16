@@ -7,6 +7,8 @@
 from __future__ import print_function
 
 import subprocess
+import os
+import sys
 from argparse import ArgumentParser
 import pandas as pd
 from scipy.stats import gmean
@@ -22,10 +24,12 @@ def run_FLOCK(input_file, method, bins, density, output_file, mfi_file,
         run_command.append(bins)
     if density:
         run_command.append(density)
-
-    subprocess.call(run_command)
-    subprocess.call(['mv', 'flock_results.txt', output_file])
-
+    try:
+        subprocess.call(run_command, env=os.environ.copy(), shell=True)
+        subprocess.call(['mv', 'flock_results.txt', output_file], env=os.environ.copy(), shell=True)
+    except:
+        sys.stderr.write("Could not run FLOCK\n")
+        sys.exit(2)
     # Here add some way to calculate the count and tack it on to profile file.
     flockdf = pd.read_table(output_file)
     if mfi_calc == "mfi":

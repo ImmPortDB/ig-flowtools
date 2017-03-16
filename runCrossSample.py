@@ -113,7 +113,11 @@ def run_cross_sample(input_files, f_names, mfi_file, output_dir, summary_stat,
     outputs = {}
     # Run cent_adjust
     for nm, flow_file in enumerate(input_files):
-        subprocess.call(['cent_adjust', 'mfi.txt', flow_file])
+        try:
+            subprocess.call(['cent_adjust', 'mfi.txt', flow_file], env=os.environ.copy(), shell=True)
+        except:
+            sys.stderr.write("Could not run cent_adjust\n")
+            sys.exit(3)
         flow_name = os.path.split(flow_file)[1]
         outfile = os.path.join(output_dir, flow_name + ".flowclr")
         outputs[outfile] = f_names[nm]
