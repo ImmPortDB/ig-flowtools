@@ -19,14 +19,14 @@ def run_FLOCK(input_file, method, bins, density, output_file, mfi_file,
     # This version of the tool assumes FLOCK is installed.
     # install FLOCK with:
     # conda install flock
-    run_command = [method. input_file]
+    run_command = [method, input_file]
     if bins:
         run_command.append(bins)
     if density:
         run_command.append(density)
     try:
-        subprocess.call(run_command, env=os.environ.copy(), shell=True)
-        subprocess.call(['mv', 'flock_results.txt', output_file], env=os.environ.copy(), shell=True)
+        subprocess.call(" ".join(run_command), env=os.environ.copy(), shell=True)
+        subprocess.call(" ".join(['mv', 'flock_results.txt', output_file]), env=os.environ.copy(), shell=True)
     except:
         sys.stderr.write("Could not run FLOCK\n")
         sys.exit(2)

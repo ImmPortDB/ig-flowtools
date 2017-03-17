@@ -21,8 +21,8 @@ profile_key = {
 
 def run_flowCL(phenotype, output_txt, output_pdf, tool):
     try:
-        subprocess.call([tool, '--args', output_txt, phenotype], env=os.environ.copy(), shell=True)
-        subprocess.call(['mv', 'flowCL_results/*.pdf', output_pdf], env=os.environ.copy(), shell=True)
+        subprocess.call(" ".join([tool, output_txt, phenotype]), env=os.environ.copy(), shell=True)
+        subprocess.call(" ".join(['mv', 'flowCL_results/*.pdf', output_pdf]), env=os.environ.copy(), shell=True)
     except:
         sys.stderr.write("Could not call flowCL\n")
         sys.exit(3)
@@ -49,7 +49,7 @@ def translate_profiles(input_file, template_dir, output, html_dir):
     html_table = "".join([html_dir, "/CLprofiles.txt"])
     score_table = "".join([html_dir, "/scores.txt"])
     try:
-        subprocess.call(['cp', input_file, score_table], env=os.environ.copy(), shell=True)
+        subprocess.call(" ".join(['cp', input_file, score_table]), env=os.environ.copy(), shell=True)
     except:
         sys.stderr.write("Couldn't copy flowCL output\n")
         sys.exit(3)

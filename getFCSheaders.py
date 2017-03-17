@@ -27,13 +27,13 @@ def get_fcs_marker_list(marker_file):
     return(fcs_markers)
 
 
-def print_fcs_headers(files, filenames, outfile):
+def print_fcs_headers(files, filenames, outfile, tool_path):
     headers = {}
-    tool = "getFCSheader.R"
+    tool = tool_path + "getFCSheader.R"
     for eachfile in files:
         tmp_output = "tmp_fcs_headers.txt"
         try:
-            subprocess.call([tool, '--args', eachfile, tmp_output], env=os.environ.copy(), shell=True)
+            subprocess.call(" ".join([tool, eachfile, tmp_output]), env=os.environ.copy(), shell=True)
         except:
             sys.stderr.write("Could not run getFCSheader.R\n")
             sys.exit(2)
@@ -72,7 +72,12 @@ if __name__ == "__main__":
             required=True,
             help="Name of the output file.")
 
+    parser.add_argument(
+            '-t',
+            dest="tool"
+    )
+
     args = parser.parse_args()
     input_files = [f for f in args.input_files]
     file_names = [fn for fn in args.file_names]
-    print_fcs_headers(input_files, file_names, args.output_file)
+    print_fcs_headers(input_files, file_names, args.output_file, args.tool)

@@ -41,4 +41,5 @@ checkFCS <- function(input_file, output_file) {
 }
 
 args <- commandArgs(trailingOnly = TRUE)
+print(args)
 checkFCS(args[1], args[2])
