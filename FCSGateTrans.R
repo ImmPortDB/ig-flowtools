@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript --vanilla --slave
+#!/usr/bin/env Rscript
 ######################################################################
 #                  Copyright (c) 2016 Northrop Grumman.
 #                          All rights reserved.
@@ -436,20 +436,20 @@ fcsoutput <- FALSE
 gate <- FALSE
 trans_method <- "None"
 scaling_factor <- 1 / 150
-if (args[5]!="None") {
+if (args[4]!="None") {
   fcsoutput <- TRUE
-  fcsoutput_file <- args[5]
+  fcsoutput_file <- args[4]
 }
-if (args[6]!="None") {
+if (args[5]!="None") {
   gate <- TRUE
-  graphs <- args[6]
-  report <- args[7]
+  graphs <- args[5]
+  report <- args[6]
 }
-if (args[8]!="None"){
-  trans_method <- args[8]
-  if (args[8] == "arcsinh"){
-    scaling_factor <- 1 / as.numeric(args[9])
+if (args[7]!="None"){
+  trans_method <- args[7]
+  if (args[7] == "arcsinh"){
+    scaling_factor <- 1 / as.numeric(args[8])
   }
 }
-transformFCS(args[2], args[3], args[4], fcsoutput, fcsoutput_file, gate, graphs,
+transformFCS(args[1], args[2], args[3], fcsoutput, fcsoutput_file, gate, graphs,
              report, trans_method, scaling_factor)

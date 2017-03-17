@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript --vanilla --slave
+#!/usr/bin/env Rscript
 # Cell Ontology Module for Galaxy
 # FlowCL
 ######################################################################
@@ -25,5 +25,5 @@ getOntology <- function(output_file, markers) {
 }
 
 args <- commandArgs(trailingOnly = TRUE)
-markers <- paste(args[3:length(args)], collapse="")
-getOntology(args[2], markers)
+markers <- paste(args[2:length(args)], collapse="")
+getOntology(args[1], markers)

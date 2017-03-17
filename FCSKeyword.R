@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript --vanilla --slave
+#!/usr/bin/env Rscript
 # ImmPort FCSKeywords
 ######################################################################
 #                  Copyright (c) 2016 Northrop Grumman.
@@ -70,4 +70,4 @@ transformFCS <- function(input_file, keyword_file="", debug=FALSE) {
 }
 
 args <- commandArgs(TRUE)
-transformFCS(args[2], args[3])
+transformFCS(args[1], args[2])

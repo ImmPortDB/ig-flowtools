@@ -1,4 +1,4 @@
-#!/usr/bin/env Rscript --vanilla --slave
+#!/usr/bin/env Rscript
 # FCS Headers Module for Galaxy
 # FlowCore
 ######################################################################
@@ -41,4 +41,4 @@ checkFCS <- function(input_file, output_file) {
 }
 
 args <- commandArgs(trailingOnly = TRUE)
-checkFCS(args[2], args[3])
+checkFCS(args[1], args[2])

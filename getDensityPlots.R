@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript --vanilla --slave
+#!/usr/bin/Rscript
 # Density Plot Module for Galaxy
 # FlowDensity
 ######################################################################
@@ -102,13 +102,13 @@ flag_default <- FALSE
 flag_pdf <- FALSE
 pdf_output <- ""
 
-if (args[3]=="None") {
+if (args[2]=="None") {
   flag_default <- TRUE
 } else {
-  if (args[3] == "i.e.:1,3,4"){
+  if (args[2] == "i.e.:1,3,4"){
   	flag_default <- TRUE
   } else {
-    channels <- as.numeric(strsplit(args[3], ",")[[1]])
+    channels <- as.numeric(strsplit(args[2], ",")[[1]])
     for (channel in channels){
 	  if (is.na(channel)){
 	    quit(save = "no", status = 11, runLast = FALSE)
@@ -121,9 +121,9 @@ if (args[3]=="None") {
   }
 }
 
-if (args[5] == "TRUE"){
-  pdf_output <- args[6]
+if (args[4] == "TRUE"){
+  pdf_output <- args[5]
   flag_pdf <- TRUE
 }
 
-checkFCS(args[2], channels, args[4], flag_default, flag_pdf, pdf_output)
+checkFCS(args[2], channels, args[3], flag_default, flag_pdf, pdf_output)
