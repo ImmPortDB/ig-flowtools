@@ -27,9 +27,9 @@ def get_fcs_marker_list(marker_file):
     return(fcs_markers)
 
 
-def print_fcs_headers(files, filenames, outfile, tool_path):
+def print_fcs_headers(files, filenames, outfile):
     headers = {}
-    tool = tool_path + "getFCSheader.R"
+    tool = "getFCSheader.R"
     for eachfile in files:
         tmp_output = "tmp_fcs_headers.txt"
         try:
@@ -71,11 +71,6 @@ if __name__ == "__main__":
             dest="output_file",
             required=True,
             help="Name of the output file.")
-
-    parser.add_argument(
-            '-t',
-            dest="tool"
-    )
 
     args = parser.parse_args()
     input_files = [f for f in args.input_files]
