@@ -13,6 +13,11 @@ def print_headers(files, filenames, outfile):
         for i, eachfile in enumerate(files):
             with open(eachfile, "r") as ef:
                 headers = ef.readline()
+                if (i == 0):
+                    h = len(headers.strip().split("\t")) + 1
+                    idx = [str(x) for x in range(1, h)]
+                    outf.write("Index\t")
+                    outf.write("\t".join(idx) + "\n")
                 outf.write("\t".join([filenames[i], headers]))
     return
 

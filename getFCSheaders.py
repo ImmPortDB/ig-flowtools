@@ -39,7 +39,12 @@ def print_fcs_headers(files, filenames, outfile):
             sys.exit(2)
         headers[eachfile] = get_fcs_marker_list(tmp_output)
 
+    h = len(headers[files[0]][0].strip().split("\t")) + 1
+    idx = [str(x) for x in range(1, h)]
+
     with open(outfile, "w") as outf:
+        outf.write("Filename\tIndex\t")
+        outf.write("\t".join(idx) + "\n")
         for i, flc in enumerate(files):
             outf.write("\t".join([filenames[i], "channels", headers[flc][0]]) + "\n")
         for j, flm in enumerate(files):
