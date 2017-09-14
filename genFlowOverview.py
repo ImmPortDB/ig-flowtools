@@ -224,7 +224,7 @@ def gen_flow_overview(args):
     if len(set(flow_stats['population'])) > 40:
         nbpop = str(len(set(flow_stats['population'])))
         sys.stderr.write("There are " + nbpop + " in the input file.")
-        sys.exit(3)
+        sys.exit(4)
 
     os.mkdir(args.output_directory)
     html_template = "genOverview.template"
