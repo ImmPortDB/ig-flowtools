@@ -231,9 +231,9 @@ if __name__ == "__main__":
             downsampling_factor = args.downsampling_factor.rstrip("X")
             if is_number(downsampling_factor):
                 ds_factor = float(downsampling_factor)
-                if ds_factor > 1:
+                if ds_factor > 1 and ds_factor <= 100:
                     ds_factor = float(downsampling_factor) / 100
-                if ds_factor > 100:
+                elif ds_factor > 100 or ds_factor <= 0:
                     sys.exit(8)
             else:
                 sys.exit(8)
