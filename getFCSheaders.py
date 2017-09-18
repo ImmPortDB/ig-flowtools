@@ -80,4 +80,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     input_files = [f for f in args.input_files]
     file_names = [fn for fn in args.file_names]
-    print_fcs_headers(input_files, file_names, args.output_file, args.tool)
+    print_fcs_headers(input_files, file_names, args.output_file)
